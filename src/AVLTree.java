@@ -20,13 +20,6 @@ public class AVLTree<K> extends BinarySearchTree<K> {
         super(lessThan);
     }
 
-    public boolean isAVL() {
-        if (root == null)
-            return true;
-        else
-            return root.isAVL();
-    }
-
     /**
      * TODO
      * Inserts the given key into this AVL tree such that the ordering
