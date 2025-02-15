@@ -86,7 +86,7 @@ class Node<K> implements Location<K> {
     }
 
     /**
-     * This method should return the closest ancestor of Node<K> q
+     * This method returns the closest ancestor of Node<K> q
      * whose key is less than q's key. It is not necessary
      * to perform key comparisons to implement this method.
      */
@@ -100,8 +100,7 @@ class Node<K> implements Location<K> {
     }
 
     /**
-     * <p>
-     * This method should return the closest ancestor of Node<K> q
+     * This method returns the closest ancestor of Node<K> q
      * whose key is greater than q's key. It is not necessary
      * to perform key comparisons to implement this method.
      */
@@ -114,8 +113,8 @@ class Node<K> implements Location<K> {
         return p;
     }
 
-    /*
-     * This method should return the Node<K> in the subtree rooted at 'this'
+    /**
+     * This method returns the Node<K> in the subtree rooted at 'this'
      * that has the smallest key.
      */
     protected Node<K> first() {
@@ -124,8 +123,8 @@ class Node<K> implements Location<K> {
         return this.left.first();
     }
 
-    /*
-     * This method should return the Node<K> in the subtree rooted at 'this'
+    /**
+     * This method returns the Node<K> in the subtree rooted at 'this'
      * that has the largest key.
      */
     private Node<K> last() {
