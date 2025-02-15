@@ -93,7 +93,6 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
 
     /**
      * TODO
-     * <p>
      * Removes the key from this BST. If the key is not in the tree,
      * nothing happens.
      */
@@ -102,13 +101,14 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
     }
 
     /**
-     * TODO * <p> * Returns a sorted list of all the keys in this tree.
+     * TODO
+     * Returns a sorted list of all the keys in this tree.
      */
     public List<K> keys() {
         return null;  // delete this line and add your code
     }
 
-    static private <K> String toStringPreorder(Node<K> p) {
+    static protected <K> String toStringPreorder(Node<K> p) {
         if (p == null) return ".";
         String left = toStringPreorder(p.left);
         if (left.length() != 0) left = " " + left;
