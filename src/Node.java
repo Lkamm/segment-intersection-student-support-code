@@ -3,7 +3,7 @@
  * means that it can be the return value of a search on the tree.
  */
 
-class Node<K> implements Location<K> {
+public class Node<K> implements Location<K> {
 
     protected K data;
     protected Node<K> left, right;
