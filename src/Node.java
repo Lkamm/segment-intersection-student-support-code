@@ -127,7 +127,7 @@ public class Node<K> implements Location<K> {
      * This method returns the Node<K> in the subtree rooted at 'this'
      * that has the largest key.
      */
-    private Node<K> last() {
+    protected Node<K> last() {
         if (this.right == null)
             return this;
         return this.right.last();
