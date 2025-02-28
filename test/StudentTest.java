@@ -29,6 +29,25 @@ public class StudentTest {
         }
     }
 
+    @Test
+    public void testKeys()
+    {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(2);
+        list.add(4);
+        list.add(6);
+        list.add(8);
+        list.add(10);
+        for (Integer key : list)
+        {
+            bst.insert(key);
+        }
+        List<Integer> keys = bst.keys();
+        assertEquals(keys, list);
+    }
+
     /**
      * TODO: Test cases
      */
