@@ -27,6 +27,7 @@ public class StudentTest {
         for (int i = 0; i != 11; ++i) {
             assertEquals(bst.contains(i), map.containsKey(i));
         }
+        // make sure to make a test that checks for duplicates
     }
 
     @Test
