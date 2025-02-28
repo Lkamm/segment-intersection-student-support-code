@@ -49,13 +49,36 @@ public class StudentTest {
         assertEquals(keys, list);
     }
 
+    @Test
+    public void testClear()
+    {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(2);
+        list.add(4);
+        list.add(6);
+        list.add(8);
+        list.add(10);
+        for (Integer key : list)
+        {
+            bst.insert(key);
+        }
+        bst.clear();
+        List<Integer> keys = bst.keys();
+    boolean theTruth = list.equals(keys);
+    assertFalse(theTruth);
+
+    }
+
     /**
      * TODO: Test cases
      */
     @Test
     public void test() {
         insertSmallBST();
-        // your tests go here
+        testKeys();
+        testClear();
     }
 
     /*

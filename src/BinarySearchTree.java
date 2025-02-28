@@ -74,8 +74,9 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
      * <p>
      * Clears all the keys from this tree. Runs in O(1) time!
      */
-    public void clear() {
-        // delete this line and add your code
+    public void clear()
+    {
+        this.numNodes = 0;
     }
 
     /**
