@@ -3,6 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.*;
 import java.util.Random;
+import java.util.function.BiPredicate;
 
 
 public class StudentTest {
@@ -75,10 +76,12 @@ public class StudentTest {
      * TODO: Test cases
      */
     @Test
-    public void test() {
+    public void test()
+    {
         insertSmallBST();
         testKeys();
         testClear();
+        insertSmallLeftLeaningAVL();
     }
 
     /*
@@ -86,7 +89,8 @@ public class StudentTest {
      */
 
     // Check that the tree is an AVL tree.
-    public static <K> void validate_AVL_property(AVLTree<K> tree) {
+    public static <K> void validate_AVL_property(AVLTree<K> tree)
+    {
         validate_AVL_property(tree.root);
     }
     // Checks that the subtree rooted at location n is and AVL tree
@@ -101,5 +105,27 @@ public class StudentTest {
             assertTrue(Math.abs(h2 - h1) < 2);
             return 1 + Math.max(h1, h2);
         }
+    }
+
+    @Test
+    public void insertSmallLeftLeaningAVL() {
+        BinarySearchTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
+        int[] a = new int[]{5, 8, 0, 2, 1,3,10,4};
+        /*
+         *       4
+         *     /  \
+         *    /    \
+         *   0      8
+         *    \    / \
+         *     2  6   10
+         */
+        for (Integer key : a)
+        {
+            avl.insert(key);
+            Node<Integer> check = avl.search(key);
+            assertTrue(check.parent.isNodeAVL());
+        }
+       // assertTrue(root.isNodeAVL());
+        // make sure to make a test that checks for duplicates
     }
 }

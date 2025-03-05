@@ -149,7 +149,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
     {
         root = remove_helper(root, key);
     }
-    private Node<K> remove_helper(Node<K> curr, K key) {
+    private Node<K> remove_helper(Node<K> curr, K key)
+    {
         if (curr == null) {
             return null;
         } else if (lessThan.test(key, curr.data)) { // remove in left subtree
@@ -162,14 +163,16 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
             curr.updateHeight();
             --numNodes;
             return curr;
-        } else {      // remove this node
+        } else
+        {      // remove this node
             if (curr.left == null) {
                 return curr.right;
             } else if (curr.right == null) {
                 curr.updateHeight();
                 --numNodes;
                 return curr.left;
-            } else {   // two children, replace with first of right subtree
+            } else
+            {   // two children, replace with first of right subtree
                 Node<K> min = curr.right.first();
                 curr.data = min.data;
                 curr.right = remove_helper(curr.right, min.data);
@@ -209,8 +212,11 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
     /**
      * The get_height method returns the height of the Node<K> n, which may be null.
      */
-    static protected <K> int get_height(Node<K> n) {
+    static protected <K> int get_height(Node<K> n)
+    {
         if (n == null) return -1;
         else return n.height;
     }
+
+
 }

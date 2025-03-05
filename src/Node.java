@@ -20,7 +20,8 @@ public class Node<K> implements Location<K> {
     /**
      * Constructs a new Node<K> with the given values for fields.
      */
-    public Node(K data, Node<K> left, Node<K> right) {
+    public Node(K data, Node<K> left, Node<K> right)
+    {
         this.data = data;
         this.left = left;
         this.right = right;
