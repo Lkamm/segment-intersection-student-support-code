@@ -113,6 +113,10 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
             ++numNodes;
             return new Node<>(key, null, null);
         }
+        else if (curr.child == null)
+        {
+            //
+        }
         else if (lessThan.test(key, curr.data)) {
             curr.left = insert_helper(key, curr.left);
             curr.updateHeight();
