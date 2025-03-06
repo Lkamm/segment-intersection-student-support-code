@@ -108,7 +108,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
     }
     protected Node<K> insert_helper(K key, Node<K> curr)
     {
-        if (curr == null) {
+        if (curr == null)
+        {
             ++numNodes;
             return new Node<>(key, null, null);
         }

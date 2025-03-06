@@ -24,46 +24,58 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      * property for a BST and the balancing property for an AVL tree are
      * maintained.
      */
-    public Node insert(K key) {
+    public Node<K> insert(K key)
+    {
          root = insert_helper(key, root);
+         System.out.println(root);
          if (root == null)
          {
-             return root;
+             return null;
          }
          else {
-             if (root.isNodeAVL())
+             if(root.parent != null)
              {
-                 return root;
+                 if (root.parent.isNodeAVL())
+                 {
+                     return root;
+                 }
+                 else
+                 {
+                     System.out.println(root.parent);
+                     return fixAVL(root.parent);
+                 }
              }
-             else {
-                 return fixAVL(root);
              }
-         }
+         return root;
     }
     protected Node<K> insert_helper(K key, Node<K> curr)
     {
+        Node<K> newNode = curr;
         if (curr == null)
         {
             ++numNodes;
-            return new Node<>(key, null, null);
+             newNode = new Node<>(key, null, null);
         }
         else if (lessThan.test(key, curr.data)) {
             curr.left = insert_helper(key, curr.left);
             curr.updateHeight();
-            return curr;
+           // return curr;
         } else if (lessThan.test(curr.data, key)) {
             curr.right = insert_helper(key, curr.right);
             curr.updateHeight();
-            return curr;
+           // return curr;
         } else {
             // duplicate; do nothing
             return curr;
         }
+        return newNode;
     }
+
 // need to have a function that finds lowest AVL and stores that information
 
-    public Node fixAVL(Node<K> root)
+    public Node<K> fixAVL(Node<K> root)
     {
+        System.out.println(root.get());
         if (root.left.height <= root.right.height)
         {
             if(root.right.left.height <= root.right.right.height)
@@ -79,14 +91,14 @@ public class AVLTree<K> extends BinarySearchTree<K> {
                 int k = root.right.left.height;
                 rotateRight(root.right);
                 Node<K> newRoot = rotateRight(root.right);
-                 rotateLeft(root);
+                rotateLeft(root);
                 // rotate right on z then rotate left on x
             }
             if (root.left.left.height < root.left.right.height)
             {
                 int k = root.left.right.height;
                 rotateLeft(root.left);
-                 rotateRight(root);
+                rotateRight(root);
                 // rotate left on y then right on x
             }
             if (root.left.left.height >= root.left.right.height)
@@ -101,11 +113,8 @@ public class AVLTree<K> extends BinarySearchTree<K> {
 
     public Node<K> rotateRight(Node<K> root)
     {
-        // probably going to need a parameter for the second node
         Node<K> newRoot = root.left;
         newRoot.right = root;
-        root.left = newRoot.right;
-        root.parent = root.left;
         root.updateHeight();
         newRoot.updateHeight();
         return newRoot;
@@ -113,13 +122,12 @@ public class AVLTree<K> extends BinarySearchTree<K> {
 
     public Node<K> rotateLeft(Node<K> root)
     {
-        root.parent = root.right;
-        root.right  = root.left.left;
-        root.parent.right = root.right.right;
+        Node<K> newRoot = root.right;
+        root.right = newRoot.left;
+        newRoot.left = root;
         root.updateHeight();
+        newRoot.updateHeight();
         return root;
-        //pretty sure the pointers are all kinds of messed up and we probably need temporary roots
-
     }
 
     /**

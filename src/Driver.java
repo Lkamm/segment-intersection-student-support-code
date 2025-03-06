@@ -4,9 +4,11 @@
  * Test by changing the treeType to Constants.AVL.
  */
 
-public class Driver {
+public class Driver
+{
   
-  public static void main(String[] args) {
+  public static void main(String[] args)
+  {
     System.out.println(Constants.TITLE);
     int treeType = Constants.BST;       // <== Change BST to AVL
     javax.swing.SwingUtilities.invokeLater(() -> new GUI(treeType));

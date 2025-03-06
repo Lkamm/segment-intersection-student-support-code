@@ -123,7 +123,8 @@ public class StudentTest {
         {
             avl.insert(key);
             Node<Integer> check = avl.search(key);
-            assertTrue(check.parent.isNodeAVL());
+            //System.out.println(check.get());
+            assertTrue(check.isNodeAVL());
         }
        // assertTrue(root.isNodeAVL());
         // make sure to make a test that checks for duplicates
