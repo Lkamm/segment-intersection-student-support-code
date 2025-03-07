@@ -28,7 +28,8 @@ public class AVLTree<K> extends BinarySearchTree<K> {
     {
          Node<K> newNode = super.insert(key);
          System.out.println(newNode.get());
-         return fixAVL(newNode);
+         root = fixAVL(newNode);
+         return root;
     }
 
 // need to have a function that finds lowest AVL and stores that information

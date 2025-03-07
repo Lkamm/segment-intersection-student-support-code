@@ -128,7 +128,6 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
             curr.updateHeight();
             return curr;
         } else {
-            // duplicate; do nothing
             return curr;
         }
     }
