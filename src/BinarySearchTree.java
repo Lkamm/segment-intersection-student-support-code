@@ -46,7 +46,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
         return null;
     }
     }
-    protected Node<K> find(K key, Node<K> curr, Node<K> parent) {
+    protected Node<K> find(K key, Node<K> curr, Node<K> parent)
+    {
         if (curr == null) {
             return parent;
         } else if (lessThan.test(key, curr.data)) {
@@ -104,18 +105,19 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
      */
     public Node<K> insert(K key)
     {
-        return root = insert_helper(key, root);
+        return insert_helper(key, root);
     }
     protected Node<K> insert_helper(K key, Node<K> curr)
     {
         if (curr == null)
         {
             ++numNodes;
-            return new Node<>(key, null, null);
-        }
-        else if (curr.child == null)
-        {
-            //
+            Node<K> newNode = new Node<>(key, null, null);
+            if(root == null)
+            {
+                root = newNode;
+            }
+            return newNode;
         }
         else if (lessThan.test(key, curr.data)) {
             curr.left = insert_helper(key, curr.left);

@@ -26,89 +26,67 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      */
     public Node<K> insert(K key)
     {
-         root = insert_helper(key, root);
-         System.out.println(root);
-         if (root == null)
-         {
-             return null;
-         }
-         else {
-             if(root.parent != null)
-             {
-                 if (root.parent.isNodeAVL())
-                 {
-                     return root;
-                 }
-                 else
-                 {
-                     System.out.println(root.parent);
-                     return fixAVL(root.parent);
-                 }
-             }
-             }
-         return root;
-    }
-    protected Node<K> insert_helper(K key, Node<K> curr)
-    {
-        Node<K> newNode = curr;
-        if (curr == null)
-        {
-            ++numNodes;
-             newNode = new Node<>(key, null, null);
-        }
-        else if (lessThan.test(key, curr.data)) {
-            curr.left = insert_helper(key, curr.left);
-            curr.updateHeight();
-           // return curr;
-        } else if (lessThan.test(curr.data, key)) {
-            curr.right = insert_helper(key, curr.right);
-            curr.updateHeight();
-           // return curr;
-        } else {
-            // duplicate; do nothing
-            return curr;
-        }
-        return newNode;
+         Node<K> newNode = super.insert(key);
+         System.out.println(newNode.get());
+         return fixAVL(newNode);
     }
 
 // need to have a function that finds lowest AVL and stores that information
 
     public Node<K> fixAVL(Node<K> root)
     {
-        System.out.println(root.get());
-        if (root.left.height <= root.right.height)
+        if(root.isNodeAVL())
         {
-            if(root.right.left.height <= root.right.right.height)
+            if (root.parent == null)
             {
+                return root;
+            } else
+            {
+                fixAVL(root.parent);
+            }
+        }
+        if (get_height(root.left) <= get_height(root.right))
+        {
+            if (get_height(root.right.left) <= get_height(root.right.right)) {
                 int k = root.right.right.height;
-                // rotate left on x
                 System.out.println("rotateLeft");
-                 rotateLeft(root);
+                // rotate left on x
+               return rotateLeft(root);
+
 
             }
-            if (root.right.left.height > root.right.right.height)
+            if (get_height(root.right.left) > get_height(root.right.right))
             {
                 int k = root.right.left.height;
                 rotateRight(root.right);
                 Node<K> newRoot = rotateRight(root.right);
-                rotateLeft(root);
+                System.out.println("RotateLeftzLeftx");
+               return rotateLeft(root);
+
+
                 // rotate right on z then rotate left on x
             }
-            if (root.left.left.height < root.left.right.height)
+        }
+        if(get_height(root.left) > get_height(root.right))
+        {
+            if (get_height(root.left.left) < get_height(root.left.right))
             {
                 int k = root.left.right.height;
+                System.out.println("RotateLeftyRightx");
+
                 rotateLeft(root.left);
-                rotateRight(root);
+               return rotateRight(root);
                 // rotate left on y then right on x
             }
-            if (root.left.left.height >= root.left.right.height)
+            if (get_height(root.left.left) >= get_height(root.left.right))
             {
                 int k = root.left.left.height;
+                System.out.println("rotateRightx");
                 //rotate right on x;
-                 rotateRight(root);
+                 return rotateRight(root);
             }
         }
-        return null;
+        return root;
     }
 
     public Node<K> rotateRight(Node<K> root)
@@ -137,6 +115,9 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      * nothing happens.
      */
     public void remove(K key) {
+        Node<K> tempNode = super.search(key);
+        super.remove(key);
+        fixAVL(tempNode);
         // delete this line and add your code
     }
 }

@@ -111,19 +111,10 @@ public class StudentTest {
     public void insertSmallLeftLeaningAVL() {
         BinarySearchTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
         int[] a = new int[]{5, 8, 0, 2, 1,3,10,4};
-        /*
-         *       4
-         *     /  \
-         *    /    \
-         *   0      8
-         *    \    / \
-         *     2  6   10
-         */
         for (Integer key : a)
         {
             avl.insert(key);
             Node<Integer> check = avl.search(key);
-            //System.out.println(check.get());
             assertTrue(check.isNodeAVL());
         }
        // assertTrue(root.isNodeAVL());
