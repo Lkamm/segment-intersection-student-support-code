@@ -105,31 +105,35 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
      */
     public Node<K> insert(K key)
     {
-        return insert_helper(key, root);
+        root = insert_helper(key, root);
+        return root;
     }
     protected Node<K> insert_helper(K key, Node<K> curr)
     {
         if (curr == null)
         {
             ++numNodes;
-            Node<K> newNode = new Node<>(key, null, null);
-            if(root == null)
-            {
-                root = newNode;
+         //   Node<K> newNode = new Node<>(key, null, null);
+          //  if(root == null)
+          //  {
+           //     root = newNode;
+            return new Node<>(key, null, null);
             }
-            return newNode;
-        }
-        else if (lessThan.test(key, curr.data)) {
+           // return newNode;
+       // }
+         if (lessThan.test(key, curr.data))
+         {
             curr.left = insert_helper(key, curr.left);
-            curr.updateHeight();
-            return curr;
-        } else if (lessThan.test(curr.data, key)) {
+
+        }
+         else if (lessThan.test(curr.data, key)) {
             curr.right = insert_helper(key, curr.right);
-            curr.updateHeight();
-            return curr;
-        } else {
+        }
+         else {
             return curr;
         }
+         curr.updateHeight();
+         return curr;
     }
     /**
      * Returns a textual representation of this BST.
