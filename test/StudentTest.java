@@ -9,7 +9,8 @@ import java.util.function.BiPredicate;
 public class StudentTest {
 
     @Test
-    public void insertSmallBST() {
+    public void insertSmallBST()
+    {
         BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
         TreeMap<Integer, Integer> map = new TreeMap<>();
         int[] a = new int[]{4, 8, 0, 2, 6, 10};
