@@ -105,35 +105,53 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
      */
     public Node<K> insert(K key)
     {
-        root = insert_helper(key, root);
-        return root;
+        if (root == null)
+        {
+            return root = insert_helper(key, null);
+        }
+        else {
+            System.out.println(root);
+            return insert_helper(key, root);
+        }
     }
     protected Node<K> insert_helper(K key, Node<K> curr)
     {
         if (curr == null)
         {
             ++numNodes;
-         //   Node<K> newNode = new Node<>(key, null, null);
-          //  if(root == null)
-          //  {
-           //     root = newNode;
             return new Node<>(key, null, null);
-            }
-           // return newNode;
-       // }
-         if (lessThan.test(key, curr.data))
+        }
+         else if (lessThan.test(key, curr.data))
          {
-            curr.left = insert_helper(key, curr.left);
-
+             if(curr.left == null)
+             {
+                 Node<K> inserted = new Node<>(key, null, null);
+                 curr.left = inserted;
+                 ++numNodes;
+                 return inserted;
+             }
+             else {
+                 curr.updateHeight();
+                 return insert_helper(key, curr.left);
+             }
         }
-         else if (lessThan.test(curr.data, key)) {
-            curr.right = insert_helper(key, curr.right);
+         else if (lessThan.test(curr.data, key))
+         {
+            if(curr.right == null)
+            {
+                Node<K> inserted = new Node<>(key, null, null);
+                curr.right = inserted;
+                ++numNodes;
+                return inserted;
+            }
+            else {
+                curr.updateHeight();
+                return insert_helper(key, curr.right);
+            }
         }
-         else {
+         else  {
             return curr;
         }
-         curr.updateHeight();
-         return curr;
     }
     /**
      * Returns a textual representation of this BST.
@@ -203,8 +221,10 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
     {
      List<K> list = new ArrayList<>();
      Node<K> curr = root.first();
+     System.out.println(numNodes);
      while(list.size() != numNodes)
      {
+       //  System.out.println(curr.data);
          list.add(curr.get());
          curr = (Node<K>) curr.next();
      }
