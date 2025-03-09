@@ -26,20 +26,19 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      */
     public Node<K> insert(K key)
     {
-         Node<K> newRoot = super.insert(key);
-         System.out.println(newRoot.get());
-         root = fixAVL(newRoot);
+     //    Node<K> newRoot = super.insert(key);
+         root = super.insert(key);
+         Node<K> newRoot = search(key);
+      //  System.out.println(newRoot.get());
+         fixAVL(newRoot);
          return root;
     }
 
 // need to have a function that finds lowest AVL and stores that information
+    // may need to make it void
 
     public Node<K> fixAVL(Node<K> root)
     {
-        if (root == null)
-        {
-            return null;
-        }
         if(root.isNodeAVL())
         {
             if (root.parent == null)
@@ -50,13 +49,12 @@ public class AVLTree<K> extends BinarySearchTree<K> {
                return fixAVL(root.parent);
             }
         }
-        if (get_height(root.left) <= get_height(root.right))
+        else if (get_height(root.left) <= get_height(root.right))
         {
             if (get_height(root.right.left) <= get_height(root.right.right)) {
                 int k = root.right.right.height;
                 System.out.println("rotateLeft");
-                // rotate left on x
-              root = rotateLeft(root);
+                root = rotateLeft(root);
 
 
             }
@@ -90,18 +88,15 @@ public class AVLTree<K> extends BinarySearchTree<K> {
             {
                 return fixAVL(root.parent);
             }
-
                 return root;
         }
 
     public Node<K> rotateRight(Node<K> root)
     {
+
         Node<K> newRoot = root.left;
         root.left = newRoot.right;
-        if (newRoot.right != null)
-        {
-            newRoot.right.parent = root;
-        }
+        newRoot.right.parent = root;
         newRoot.right = root;
         root.updateHeight();
         newRoot.updateHeight();
@@ -111,16 +106,11 @@ public class AVLTree<K> extends BinarySearchTree<K> {
     public Node<K> rotateLeft(Node<K> root)
     {
         Node<K> newRoot = root.right;
-        root.right = newRoot.left;  // Reattach right subtree of newRoot
-        if (newRoot.left != null) {
-            newRoot.left.parent = root; // Reattach the parent correctly
-        }
-        newRoot.left = root;  // Make root the left child of newRoot
-
-        // Update heights
+        root.right = newRoot.left;
+        newRoot.left.parent = root;
+        newRoot.left = root;
         root.updateHeight();
         newRoot.updateHeight();
-
         return newRoot;
     }
 

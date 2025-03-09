@@ -138,14 +138,16 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
     /**
      * Returns a textual representation of this BST.
      */
-    public String toString() {
+    public String toString()
+    {
         return toStringPreorder(root);
     }
 
     /**
      * Returns true iff the given key is in this BST.
      */
-    public boolean contains(K key) {
+    public boolean contains(K key)
+    {
         Node<K> p = search(key);
         return p != null;
     }

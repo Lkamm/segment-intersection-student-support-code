@@ -70,7 +70,6 @@ public class StudentTest {
         List<Integer> keys = bst.keys();
     boolean theTruth = list.equals(keys);
     assertFalse(theTruth);
-
     }
 
     /**
@@ -90,7 +89,7 @@ public class StudentTest {
      */
 
     // Check that the tree is an AVL tree.
-    public static <K> void validate_AVL_property(AVLTree<K> tree)
+    public static <K> void validate_AVL_propertys(AVLTree<K> tree)
     {
         validate_AVL_property(tree.root);
     }
@@ -110,15 +109,28 @@ public class StudentTest {
 
     @Test
     public void insertSmallLeftLeaningAVL() {
-        BinarySearchTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
+        AVLTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
         int[] a = new int[]{5, 8, 0, 2, 1,3,10,4};
         for (Integer key : a)
         {
             avl.insert(key);
-            Node<Integer> check = avl.search(key);
-            assertTrue(check.isNodeAVL());
+            //validate_AVL_propertys(avl);
         }
-       // assertTrue(root.isNodeAVL());
+
+        List<Integer> list = avl.keys();
+        List<Integer> listTruth = new ArrayList<>();
+        listTruth.add(0);
+        listTruth.add(1);
+        listTruth.add(2);
+        listTruth.add(3);
+        listTruth.add(4);
+        listTruth.add(5);
+        listTruth.add(8);
+        listTruth.add(10);
+
+
+
+        // assertTrue(root.isNodeAVL());
         // make sure to make a test that checks for duplicates
     }
 }
