@@ -119,9 +119,9 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      * nothing happens.
      */
     public void remove(K key) {
-      //  Node<K> tempNode = super.search(key);
-      //  super.remove(key);
-      //  fixAVL(tempNode);
-        // delete this line and add your code
+      Node<K> tempNode = super.search(key);
+      tempNode = tempNode.parent;
+      super.remove(key);
+      fixAVL(tempNode);
     }
 }
