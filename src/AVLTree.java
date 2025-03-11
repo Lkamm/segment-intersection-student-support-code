@@ -35,7 +35,8 @@ public class AVLTree<K> extends BinarySearchTree<K> {
 // need to have a function that finds lowest AVL and stores that information
     // may need to make it void
 
-    public Node<K> fixAVL(Node<K> node) {
+    public Node<K> fixAVL(Node<K> node)
+    {
         if (node.isNodeAVL()) {
             if (node.parent == null) {
                 // System.out.println(node);
@@ -85,7 +86,8 @@ public class AVLTree<K> extends BinarySearchTree<K> {
         System.out.println("rotatingRight");
         Node<K> newRoot = root.left;
         root.left = newRoot.right;
-        if (newRoot.right != null) {
+        if (newRoot.right != null)
+        {
             newRoot.right.parent = root;
         }
         newRoot.right = root;
@@ -118,10 +120,12 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      * Removes the key from this BST. If the key is not in the tree,
      * nothing happens.
      */
-    public void remove(K key) {
+    public void remove(K key)
+    {
       Node<K> tempNode = super.search(key);
       tempNode = tempNode.parent;
       super.remove(key);
       fixAVL(tempNode);
     }
+
 }

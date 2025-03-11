@@ -158,10 +158,13 @@ public class StudentTest {
     public void insertSmallLeftLeaningAVL()
     {
         AVLTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
         int[] a = new int[]{5, 8, 0, 2, 1,3,10,4};
         for (Integer key : a)
         {
             avl.insert(key);
+            map.put(key, key);
             validate_AVL_propertys(avl);
         }
 
@@ -175,6 +178,13 @@ public class StudentTest {
         listTruth.add(5);
         listTruth.add(8);
         listTruth.add(10);
+       // for (int i = 0; i != 15; ++i) {
+        //    assertEquals(avl.contains(i), map.containsKey(i));
+       // }
+
+        System.out.println(list.toString());
+        System.out.println(listTruth.toString());
+        // does not put them in the right order
         // make sure to make a test that checks for duplicates
     }
     @Test
@@ -206,4 +216,6 @@ public class StudentTest {
             //validate_AVL_propertys(avl);
         }
     }
+
+
 }
