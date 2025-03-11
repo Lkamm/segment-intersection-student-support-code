@@ -110,9 +110,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
             return root = insert_helper(key, null);
         }
         else {
-          //  return insert_helper(key, root);
             Node<K> newNode = insert_helper(key, root);
-            //System.out.println(get_height(newNode);
+            //System.out.println(newNode.height);
             return newNode;
         }
     }
@@ -121,41 +120,42 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
         if (curr == null)
         {
             ++numNodes;
-            return new Node<>(key, null, null);
+            Node<K> inserted = new Node<>(key, null, null);
+            inserted.updateHeight();
+            return inserted;
         }
-         else if (lessThan.test(key, curr.data))
-         {
-             if(curr.left == null)
-             {
-                 Node<K> inserted = new Node<>(key, null, null);
-                 curr.left = inserted;
-                 inserted.parent = curr;
-                 ++numNodes;
-                 curr.updateHeight();
-                 return inserted;
-             }
-             else {
-                 curr.updateHeight();
-                 return insert_helper(key, curr.left);
-             }
-        }
-         else if (lessThan.test(curr.data, key))
-         {
-            if(curr.right == null)
-            {
+        if (lessThan.test(key, curr.data)) {
+            if (curr.left == null) {
                 Node<K> inserted = new Node<>(key, null, null);
-                curr.right = inserted;
-                inserted.parent = curr;
                 ++numNodes;
+                curr.left = inserted;
+                inserted.parent = curr;
+                inserted.updateHeight();
+                curr.updateHeight();
+                return inserted;
+            } else {
+                Node<K> inserted = insert_helper(key, curr.left);
+                inserted.updateHeight();
                 curr.updateHeight();
                 return inserted;
             }
-            else {
+        } else if (lessThan.test(curr.data, key)) {
+            if (curr.right == null) {
+                Node<K> inserted = new Node<>(key, null, null);
+                ++numNodes;
+                curr.right = inserted;
+                inserted.parent = curr;
+                inserted.updateHeight();
                 curr.updateHeight();
-                return insert_helper(key, curr.right);
+                return inserted;
+            } else {
+                Node<K> inserted = insert_helper(key, curr.right);
+                inserted.updateHeight();
+                curr.updateHeight();
+                return inserted;
             }
         }
-         else  {
+        else {
             return curr;
         }
     }
@@ -251,7 +251,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
      */
     static protected <K> int get_height(Node<K> n)
     {
-        if (n == null) return -1;
+        if (n == null)
+            return -1;
         else return n.height;
     }
 
