@@ -22,7 +22,8 @@ public class StudentTest {
          *    \    / \
          *     2  6   10
          */
-        for (Integer key : a) {
+        for (Integer key : a)
+        {
             bst.insert(key);
             map.put(key, key);
         }
@@ -66,7 +67,6 @@ public class StudentTest {
         {
             assertEquals(b[i], bst.keys().get(i));
         }
-
     }
 
     @Test
@@ -143,9 +143,12 @@ public class StudentTest {
     // and returns the height of this subtree.
     public static <K> int validate_AVL_property(Node<K> n)
     {
-        if (n == null) {
+        if (n == null)
+        {
             return -1;
-        } else {
+        }
+        else
+        {
             int h1, h2;
             h1 = validate_AVL_property(n.left);
             h2 = validate_AVL_property(n.right);
@@ -160,7 +163,7 @@ public class StudentTest {
         AVLTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
         TreeMap<Integer, Integer> map = new TreeMap<>();
 
-        int[] a = new int[]{5, 8, 0, 2, 1,3,10,4};
+        int[] a = new int[]{5, 8, 0, 2, 1, 3, 10, 4};
         for (Integer key : a)
         {
             avl.insert(key);
@@ -187,6 +190,7 @@ public class StudentTest {
         // does not put them in the right order
         // make sure to make a test that checks for duplicates
     }
+
     @Test
     public void testNodeGet()
     {
@@ -217,5 +221,17 @@ public class StudentTest {
         }
     }
 
+    @Test
+    public void testBigBSTInsert()
+    {
 
-}
+
+    }
+
+    @Test
+    public void testBigAVL()
+    {
+
+    }
+
+    }

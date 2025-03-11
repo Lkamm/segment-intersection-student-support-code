@@ -9,7 +9,8 @@ import java.util.function.BiPredicate;
  * This class implements a generic unbalanced binary search tree (BST).
  */
 
-public class BinarySearchTree<K> implements OrderedSet<K> {
+public class BinarySearchTree<K> implements OrderedSet<K>
+{
 
     protected Node<K> root;
     protected int numNodes;
@@ -19,7 +20,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
      * Constructs an empty BST, where the data is to be organized according to
      * the lessThan relation.
      */
-    public BinarySearchTree(BiPredicate<K, K> lessThan) {
+    public BinarySearchTree(BiPredicate<K, K> lessThan)
+    {
         this.lessThan = lessThan;
     }
 
@@ -139,7 +141,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
                 curr.updateHeight();
                 return inserted;
             }
-        } else if (lessThan.test(curr.data, key)) {
+        }
+        else if (lessThan.test(curr.data, key)) {
             if (curr.right == null) {
                 Node<K> inserted = new Node<>(key, null, null);
                 ++numNodes;
@@ -155,7 +158,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
                 return inserted;
             }
         }
-        else {
+        else
+        {
             return curr;
         }
     }
@@ -240,7 +244,8 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
      return list;
     }
 
-    static protected <K> String toStringPreorder(Node<K> p) {
+    static protected <K> String toStringPreorder(Node<K> p)
+    {
         if (p == null) return ".";
         String left = toStringPreorder(p.left);
         if (left.length() != 0) left = " " + left;
@@ -259,6 +264,4 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
             return -1;
         else return n.height;
     }
-
-
 }

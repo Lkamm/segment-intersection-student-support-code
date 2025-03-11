@@ -24,94 +24,100 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      * property for a BST and the balancing property for an AVL tree are
      * maintained.
      */
-    public Node<K> insert(K key)
-    {
-        Node<K> newRoot =  super.insert(key);
-          newRoot = fixAVL(newRoot);
-        // System.out.println(newRoot.height);
-          return newRoot;
-    }
 
 // need to have a function that finds lowest AVL and stores that information
     // may need to make it void
 
-    public Node<K> fixAVL(Node<K> node)
+    public Node<K> insert(K key)
     {
-        if (node.isNodeAVL()) {
-            if (node.parent == null) {
-                // System.out.println(node);
-                return node;
-            } else {
-                return fixAVL(node.parent);
-            }
-        }
-        else {
-            //System.out.println(node.data);
-            if (get_height(node.left) <= get_height(node.right)) {
-                if (get_height(node.right.left) <= get_height(node.right.right)) {
-                    int k = node.right.right.height;
-                    System.out.println("rotateLeft");
-                    node = rotateLeft(node);
-                } else if (get_height(node.right.left) > get_height(node.right.right)) {
-                    int k = node.right.left.height;
-                    node.right = rotateRight(node.right);
-                    System.out.println("RotateLeftzLeftx");
-                    node = rotateLeft(node);
-                    // rotate right on z then rotate left on x
-                }
-            } else if (get_height(node.left) > get_height(node.right)) {
-                if (get_height(node.left.left) < get_height(node.left.right)) {
-                    int k = node.left.right.height;
-                    System.out.println("RotateLeftyRightx");
-                    node.left = rotateLeft(node.left);
-                    node = rotateRight(node);
-                    // rotate left on y then right on x
-                } else if (get_height(node.left.left) >= get_height(node.left.right)) {
-                    int k = node.left.left.height;
-                    System.out.println("rotateRightx");
-                    //rotate right on x;
-                    node = rotateRight(node);
-                }
-            }
-            node.updateHeight();
-            if (node.parent != null) {
-                return fixAVL(node.parent);
-            }
-                return node;
-            }
-        }
-
-    public Node<K> rotateRight(Node<K> root)
-    {
-        System.out.println("rotatingRight");
-        Node<K> newRoot = root.left;
-        root.left = newRoot.right;
-        if (newRoot.right != null)
-        {
-            newRoot.right.parent = root;
-        }
-        newRoot.right = root;
-        newRoot.parent = root.parent;
-        root.parent = newRoot;
-        root.updateHeight();
-        newRoot.updateHeight();
-        return newRoot;
+        return fixAVL(super.insert(key));
     }
 
-    public Node<K> rotateLeft(Node<K> root)
+    public Node<K> fixAVL(Node<K> inserted)
     {
-        System.out.println("RotatingLeft");
-        Node<K> newRoot = root.right;
-        root.right = newRoot.left;
-        if (newRoot.left != null) {
-            newRoot.left.parent = root;
+        System.out.println(" " + inserted + "this was just inserted");
+        Node<K> curr = inserted;
+        while (curr != null){
+            curr.updateHeight();
+            int balance = getBalance(curr);
+
+            if (balance > 1){
+                if (getBalance(curr.left) < 0){
+                    rotateLeft(curr.left);
+                }
+                rotateRight(curr);
+            }else if (balance < -1){
+                System.out.println("ZigZag right " + curr.right + " left "+ curr);
+                if (getBalance(curr.right) > 0){
+                    rotateRight(curr.right);
+                }
+                rotateLeft(curr);
+            }
+            curr = curr.parent;
         }
-        newRoot.left = root;
-        newRoot.parent = root.parent;
-        root.parent = newRoot;
-        root.updateHeight();
-        newRoot.updateHeight();
-        return newRoot;
+        return inserted;
+    }
+    private int getBalance(Node<K> node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftHeight = (node.left == null) ? -1 : node.left.height;
+        int rightHeight = (node.right == null) ? -1 : node.right.height;
+
+        return leftHeight - rightHeight;
+
+    }
+
+
+
+
+    public Node<K> rotateRight(Node<K> p){
+        Node<K> newSubRoot = p.left;
+        p.left = newSubRoot.right;
+        if(newSubRoot.right != null) {
+            newSubRoot.right.parent = p;
+        }
+        newSubRoot.right = p;
+        newSubRoot.parent = p.parent;
+        if(p.parent == null) {
+            this.root = newSubRoot;
+        }else if(p == p.parent.left) {
+            p.parent.left = newSubRoot;
+        }else {
+            p.parent.right = newSubRoot;
+        }
+        p.parent= newSubRoot;
+
+        p.updateHeight();
+        newSubRoot.updateHeight();
+
+        return newSubRoot;
+    }
+
+
+
+    public Node<K> rotateLeft(Node<K> p){
+        Node<K> newSubRoot = p.right;
+        p.right = newSubRoot.left;
+
+        if(newSubRoot.left != null) {
+            newSubRoot.left.parent = p;
+        }
+        newSubRoot.left = p;
+        newSubRoot.parent = p.parent;
+        if(p.parent == null) {
+            this.root = newSubRoot;
+        }else if(p == p.parent.left) {
+            p.parent.left = newSubRoot;
+        }else {
+            p.parent.right = newSubRoot;
+        }
+        p.parent= newSubRoot;
+
+        p.updateHeight();
+        newSubRoot.updateHeight();
+
+        return newSubRoot;
     }
 
     /**

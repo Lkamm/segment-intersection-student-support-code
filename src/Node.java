@@ -79,10 +79,12 @@ public class Node<K> implements Location<K> {
      * of this Node<K>.
      */
     @Override
-    public Location<K> next() {
+    public Location<K> next()
+    {
         if (right != null)
             return right.first();
-        else {
+        else
+        {
             return nextAncestor(this);
         }
     }
@@ -92,9 +94,11 @@ public class Node<K> implements Location<K> {
      * whose key is less than q's key. It is not necessary
      * to perform key comparisons to implement this method.
      */
-    protected Node<K> prevAncestor(Node<K> q) {
+    protected Node<K> prevAncestor(Node<K> q)
+    {
         Node<K> p = q.parent;
-        while (p != null && p.left == q) {
+        while (p != null && p.left == q)
+        {
             q = p;
             p = p.parent;
         }
@@ -130,7 +134,8 @@ public class Node<K> implements Location<K> {
      * This method returns the Node<K> in the subtree rooted at 'this'
      * that has the largest key.
      */
-    protected Node<K> last() {
+    protected Node<K> last()
+    {
         if (this.right == null)
             return this;
         return this.right.last();
