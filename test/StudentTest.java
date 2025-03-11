@@ -13,7 +13,7 @@ public class StudentTest {
     {
         BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
         TreeMap<Integer, Integer> map = new TreeMap<>();
-        int[] a = new int[]{4, 8, 0, 2, 6, 10};
+        int[] a = new int[]{4, 8, 0, 2, 6, 10,};
         /*
          *       4
          *     /  \
@@ -30,6 +30,43 @@ public class StudentTest {
             assertEquals(bst.contains(i), map.containsKey(i));
         }
         // make sure to make a test that checks for duplicates
+    }
+
+    @Test
+    public void testDups()
+    {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        int[] a = new int[]{4, 8, 0, 2, 6, 10, 11, 12, 4, 6, 8, 10};
+        int[] b = new int[]{0, 2, 4, 6, 8, 10, 11, 12};
+        /*
+         *       4
+         *     /  \
+         *    /    \
+         *   0      8
+         *    \    / \
+         *     2  6   10
+         */
+        for (Integer key : a) {
+            bst.insert(key);
+            map.put(key, key);
+        }
+        for (int i = 0; i < bst.keys().size() && i < b.length; i++)
+        {
+            assertEquals(b[i], bst.keys().get(i));
+        }
+
+        bst.remove(4);
+        bst.remove(10);
+        bst.insert(4);
+        bst.insert(4);
+        bst.insert(10);
+        bst.insert(10);
+        for (int i = 0; i < bst.keys().size() && i < b.length; i++)
+        {
+            assertEquals(b[i], bst.keys().get(i));
+        }
+
     }
 
     @Test
@@ -82,6 +119,15 @@ public class StudentTest {
         testKeys();
         testClear();
         insertSmallLeftLeaningAVL();
+        nodeTest();
+    }
+
+    @Test
+    public void nodeTest()
+    {
+        testNodeGet();
+        testNodeIsLeaf();
+        testNodeUpdateHeightGetHeight();
     }
 
     /*
@@ -130,5 +176,34 @@ public class StudentTest {
         listTruth.add(8);
         listTruth.add(10);
         // make sure to make a test that checks for duplicates
+    }
+    @Test
+    public void testNodeGet()
+    {
+        Node<Integer> newNode = new Node<Integer>(9, null, null);
+        assertEquals(newNode.get(), 9);
+    }
+    @Test
+    public void testNodeIsLeaf()
+    {
+        Node<Integer> newNode = new Node<Integer>(9, null, null);
+        Node<Integer> newNodeParent = new Node<Integer>(8, newNode, null);
+        assertTrue(newNode.isLeaf());
+        assertFalse(newNodeParent.isLeaf());
+    }
+
+    @Test
+    public void testNodeUpdateHeightGetHeight()
+    {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
+        int[] a = new int[]{5, 8, 0, 2, 1,3,10,4};
+        for (Integer key : a)
+        {
+            bst.insert(key);
+            int h = bst.search(key).height;
+            assertEquals(BinarySearchTree.get_height(bst.search(key)), h);
+            assertFalse(bst.search(key).updateHeight());
+            //validate_AVL_propertys(avl);
+        }
     }
 }

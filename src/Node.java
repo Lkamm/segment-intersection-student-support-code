@@ -34,7 +34,8 @@ public class Node<K> implements Location<K> {
      * Provide the get() method required by the Location interface.
      */
     @Override
-    public K get() {
+    public K get()
+    {
         return data;
     }
 
@@ -118,7 +119,8 @@ public class Node<K> implements Location<K> {
      * This method returns the Node<K> in the subtree rooted at 'this'
      * that has the smallest key.
      */
-    protected Node<K> first() {
+    protected Node<K> first()
+    {
         if (this.left == null)
             return this;
         return this.left.first();

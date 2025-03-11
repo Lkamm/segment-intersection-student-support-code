@@ -225,7 +225,11 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
      */
     public List<K> keys()
     {
-     List<K> list = new ArrayList<>();
+        List<K> list = new ArrayList<>();
+        if (this.root == null)
+        {
+         return list;
+        }
      Node<K> curr = root.first();
      while(list.size() != numNodes)
      {
