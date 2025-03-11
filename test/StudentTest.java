@@ -116,7 +116,7 @@ public class StudentTest {
         for (Integer key : a)
         {
             avl.insert(key);
-            //validate_AVL_propertys(avl);
+            validate_AVL_propertys(avl);
         }
 
         List<Integer> list = avl.keys();
