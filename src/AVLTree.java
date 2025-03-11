@@ -26,74 +26,63 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      */
     public Node<K> insert(K key)
     {
-     //    Node<K> newRoot = super.insert(key);
-        super.insert(key);
-         Node<K> newRoot = search(key);
-      //  System.out.println(newRoot.get());
-          fixAVL(newRoot);
-          return root;
+        Node<K> newRoot =  super.insert(key);
+          newRoot = fixAVL(newRoot);
+       // System.out.println(newRoot);
+          return newRoot;
     }
 
 // need to have a function that finds lowest AVL and stores that information
     // may need to make it void
 
-    public Node<K> fixAVL(Node<K> root)
-    {
-        if(root.isNodeAVL())
-        {
-            if (root.parent == null)
-            {
-                return root;
-            } else
-            {
-               return fixAVL(root.parent);
+    public Node<K> fixAVL(Node<K> node) {
+        if (node.isNodeAVL()) {
+            if (node.parent == null) {
+               // System.out.println(node);
+                return node;
+            } else {
+                return fixAVL(node.parent);
             }
-        }
-        else if (get_height(root.left) <= get_height(root.right))
-        {
-            if (get_height(root.right.left) <= get_height(root.right.right)) {
-                int k = root.right.right.height;
-                System.out.println("rotateLeft");
-                root = rotateLeft(root);
+        } else {
+            System.out.println(node.get());
+         if (get_height(node.left) <= get_height(node.right)) {
+                if (get_height(node.right.left) <= get_height(node.right.right)) {
+                    int k = node.right.right.height;
+                    System.out.println("rotateLeft");
+                    node = rotateLeft(node);
+                } else if (get_height(node.right.left) > get_height(node.right.right)) {
+                    int k = node.right.left.height;
+                    node.right = rotateRight(node.right);
+                    System.out.println("RotateLeftzLeftx");
+                    node = rotateLeft(node);
 
 
+                    // rotate right on z then rotate left on x
+                }
+            } else if (get_height(node.left) > get_height(node.right)) {
+                if (get_height(node.left.left) < get_height(node.left.right)) {
+                    int k = node.left.right.height;
+                    System.out.println("RotateLeftyRightx");
+                    node.left = rotateLeft(node.left);
+                    node = rotateRight(node);
+                    // rotate left on y then right on x
+                } else if (get_height(node.left.left) >= get_height(node.left.right)) {
+                    int k = node.left.left.height;
+                    System.out.println("rotateRightx");
+                    //rotate right on x;
+                    node = rotateRight(node);
+                }
             }
-            if (get_height(root.right.left) > get_height(root.right.right))
-            {
-                int k = root.right.left.height;
-                root.right = rotateRight(root.right);
-                root = rotateLeft(root);
-                System.out.println("RotateLeftzLeftx");
-
-                // rotate right on z then rotate left on x
+            if (node.parent != null) {
+                return fixAVL(node.parent);
             }
+            return node;
         }
-        else if(get_height(root.left) > get_height(root.right)) {
-            if (get_height(root.left.left) < get_height(root.left.right)) {
-                int k = root.left.right.height;
-                System.out.println("RotateLeftyRightx");
-
-                root.left = rotateLeft(root.left);
-                root = rotateRight(root);
-                // rotate left on y then right on x
-            }
-            if (get_height(root.left.left) >= get_height(root.left.right)) {
-                int k = root.left.left.height;
-                System.out.println("rotateRightx");
-                //rotate right on x;
-                 root = rotateRight(root);
-            }
-        }
-            if(root.parent != null)
-            {
-                return fixAVL(root.parent);
-            }
-                return root;
-        }
+    }
 
     public Node<K> rotateRight(Node<K> root)
     {
-
+        System.out.println("rotatingRight");
         Node<K> newRoot = root.left;
         root.left = newRoot.right;
         newRoot.right.parent = root;
@@ -105,6 +94,7 @@ public class AVLTree<K> extends BinarySearchTree<K> {
 
     public Node<K> rotateLeft(Node<K> root)
     {
+        System.out.println("RotatingLeft");
         Node<K> newRoot = root.right;
         root.right = newRoot.left;
         newRoot.left.parent = root;

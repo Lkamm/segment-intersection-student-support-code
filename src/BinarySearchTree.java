@@ -110,8 +110,10 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
             return root = insert_helper(key, null);
         }
         else {
-            System.out.println(root);
-            return insert_helper(key, root);
+          //  return insert_helper(key, root);
+            Node<K> newNode = insert_helper(key, root);
+            //System.out.println(get_height(newNode);
+            return newNode;
         }
     }
     protected Node<K> insert_helper(K key, Node<K> curr)
@@ -127,7 +129,9 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
              {
                  Node<K> inserted = new Node<>(key, null, null);
                  curr.left = inserted;
+                 inserted.parent = curr;
                  ++numNodes;
+                 curr.updateHeight();
                  return inserted;
              }
              else {
@@ -141,7 +145,9 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
             {
                 Node<K> inserted = new Node<>(key, null, null);
                 curr.right = inserted;
+                inserted.parent = curr;
                 ++numNodes;
+                curr.updateHeight();
                 return inserted;
             }
             else {
@@ -221,7 +227,6 @@ public class BinarySearchTree<K> implements OrderedSet<K> {
     {
      List<K> list = new ArrayList<>();
      Node<K> curr = root.first();
-     System.out.println(numNodes);
      while(list.size() != numNodes)
      {
        //  System.out.println(curr.data);

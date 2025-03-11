@@ -95,7 +95,8 @@ public class StudentTest {
     }
     // Checks that the subtree rooted at location n is and AVL tree
     // and returns the height of this subtree.
-    public static <K> int validate_AVL_property(Node<K> n) {
+    public static <K> int validate_AVL_property(Node<K> n)
+    {
         if (n == null) {
             return -1;
         } else {
@@ -108,7 +109,8 @@ public class StudentTest {
     }
 
     @Test
-    public void insertSmallLeftLeaningAVL() {
+    public void insertSmallLeftLeaningAVL()
+    {
         AVLTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
         int[] a = new int[]{5, 8, 0, 2, 1,3,10,4};
         for (Integer key : a)
@@ -127,10 +129,6 @@ public class StudentTest {
         listTruth.add(5);
         listTruth.add(8);
         listTruth.add(10);
-
-
-
-        // assertTrue(root.isNodeAVL());
         // make sure to make a test that checks for duplicates
     }
 }
