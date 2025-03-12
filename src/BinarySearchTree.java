@@ -112,9 +112,13 @@ public class BinarySearchTree<K> implements OrderedSet<K>
             return root = insert_helper(key, null);
         }
         else {
-            Node<K> newNode = insert_helper(key, root);
             //System.out.println(newNode.height);
-            return newNode;
+            if (contains(key))
+            {
+                Node<K> locInsert = search(key);
+                return locInsert;
+            }
+            return insert_helper(key, root);
         }
     }
     protected Node<K> insert_helper(K key, Node<K> curr)
@@ -191,21 +195,24 @@ public class BinarySearchTree<K> implements OrderedSet<K>
     }
     private Node<K> remove_helper(Node<K> curr, K key)
     {
-        if (curr == null) {
+        if (curr == null)
+        {
             return null;
-        } else if (lessThan.test(key, curr.data)) { // remove in left subtree
+        }
+        else if (lessThan.test(key, curr.data)) { // remove in left subtree
             curr.left = remove_helper(curr.left, key);
             curr.updateHeight();
-            --numNodes;
+            //--numNodes;
             return curr;
         } else if (lessThan.test(curr.data, key)) { // remove in right subtree
             curr.right = remove_helper(curr.right, key);
             curr.updateHeight();
-            --numNodes;
+            // --numNodes;
             return curr;
         } else
         {      // remove this node
             if (curr.left == null) {
+                --numNodes;
                 return curr.right;
             } else if (curr.right == null) {
                 curr.updateHeight();
@@ -218,7 +225,6 @@ public class BinarySearchTree<K> implements OrderedSet<K>
                 curr.right = remove_helper(curr.right, min.data);
                 curr.updateHeight();
                 // may need to call the correct curr.right on updateHeight. WIll have to test this
-                --numNodes;
                 return curr;
             }
         }

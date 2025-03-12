@@ -38,7 +38,7 @@ public class StudentTest {
     {
         BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
         TreeMap<Integer, Integer> map = new TreeMap<>();
-        int[] a = new int[]{4, 8, 0, 2, 6, 10, 11, 12, 4, 6, 8, 10};
+        int[] a = new int[]{4, 8, 0, 2, 6, 10, 11, 12, 4, 6, 8, 10, 4, 4};
         int[] b = new int[]{0, 2, 4, 6, 8, 10, 11, 12};
         /*
          *       4
@@ -52,6 +52,7 @@ public class StudentTest {
             bst.insert(key);
             map.put(key, key);
         }
+
         for (int i = 0; i < bst.keys().size() && i < b.length; i++)
         {
             assertEquals(b[i], bst.keys().get(i));
@@ -69,6 +70,52 @@ public class StudentTest {
         }
     }
 
+    @Test
+    public void smallRemove()
+    {
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        List<Integer> list = new ArrayList<>();
+        int[] a = new int[]{4, 8, 0, 2, 6, 10, 11, 12};
+        for (Integer key : a) {
+            bst.insert(key);
+            map.put(key, key);
+            list.add(key);
+        }
+        for(Integer key: a)
+        {
+            bst.remove(key);
+            list.remove(key); // remove all values
+        }
+        Collections.sort(list);
+        assertEquals(list, bst.keys());
+
+        for(Integer key: a) // testing if remove removes all values and if keys works properly
+        {
+            bst.insert(key);
+            list.add(key);
+            Collections.sort(list);
+            assertEquals(list, bst.keys());
+        }
+        list.clear();
+        bst.remove(10); // one child
+        int[] b = new int[]{4, 8, 0, 2, 6, 11, 12};
+        for(Integer key: b)
+        {
+            list.add(key);
+        }
+        Collections.sort(list);
+        assertEquals(bst.keys(), list);
+        list.clear();
+        int[] c = new int[]{4, 8, 2, 6, 11, 12};
+        for(Integer key: c)
+        {
+            list.add(key);
+        }
+        Collections.sort(list);
+        bst.remove(0); // one child
+        assertEquals(bst.keys(), list);
+    }
     @Test
     public void testKeys()
     {
@@ -116,10 +163,15 @@ public class StudentTest {
     public void test()
     {
         insertSmallBST();
+        testBigBSTInsert();
         testKeys();
         testClear();
+        smallRemove();
+        testDups();
         insertSmallLeftLeaningAVL();
+        testBigAVL();
         nodeTest();
+
     }
 
     @Test
@@ -224,14 +276,84 @@ public class StudentTest {
     @Test
     public void testBigBSTInsert()
     {
-
-
+        for (int i = 0; i < 100; i++)
+        {
+            BinarySearchTree<Integer> bst = new BinarySearchTree<>((Integer x, Integer y) -> x < y);
+            TreeMap<Integer, Integer> map = new TreeMap<>();
+            List<Integer> list = new ArrayList<>();
+            int randomSize = (int) (Math.random() * 500) + 100;
+            int[] a = new int[randomSize];
+            for (int j = 0; j < randomSize; j++)
+            {
+                a[j] = (int) (Math.random() * 500) + 10;
+            }
+            /*
+             *       4
+             *     /  \
+             *    /    \
+             *   0      8
+             *    \    / \
+             *     2  6   10
+             */
+            for (Integer key : a)
+            {
+                bst.insert(key);
+                bst.insert(key); // check for duplicates
+                map.put(key, key);
+                if (!list.contains(key))
+                {
+                    list.add(key);
+                }
+            }
+            for (int k = 0; k != 11; ++k)
+            {
+                assertEquals(bst.contains(i), map.containsKey(i));
+            }
+            Collections.sort(list);
+            assertEquals(list, bst.keys());
+        }
     }
 
     @Test
     public void testBigAVL()
     {
-
+        for (int i = 0; i < 100; i++)
+        {
+            AVLTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
+            TreeMap<Integer, Integer> map = new TreeMap<>();
+            List<Integer> list = new ArrayList<>();
+            int randomSize = (int) (Math.random() * 500) + 100;
+            int[] a = new int[randomSize];
+            for (int j = 0; j < randomSize; j++)
+            {
+                a[j] = (int) (Math.random() * 500) + 10;
+            }
+            /*
+             *       4
+             *     /  \
+             *    /    \
+             *   0      8
+             *    \    / \
+             *     2  6   10
+             */
+            for (Integer key : a)
+            {
+                avl.insert(key);
+                avl.insert(key);// check for duplicates
+                map.put(key, key);
+                validate_AVL_propertys(avl);
+                if (!list.contains(key))
+                {
+                    list.add(key);
+                }
+            }
+            for (int k = 0; k != 11; ++k)
+            {
+                assertEquals(avl.contains(i), map.containsKey(i));
+            }
+            Collections.sort(list);
+            assertEquals(list, avl.keys());
+        }
     }
 
     }

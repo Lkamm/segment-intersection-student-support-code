@@ -128,10 +128,25 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      */
     public void remove(K key)
     {
-      Node<K> tempNode = super.search(key);
-      tempNode = tempNode.parent;
-      super.remove(key);
-      fixAVL(tempNode);
-    }
+        Node<K> nodeToRemove = super.search(key);
+        if (nodeToRemove == null) return; // Key not found, nothing to remove
+        Node<K> rebalanceStart;
 
+        if (nodeToRemove.left != null && nodeToRemove.right != null)
+        { // Two children case
+            Node<K> successor = nodeToRemove.right.first(); // In-order successor
+            rebalanceStart = (successor.parent != null) ? successor.parent : nodeToRemove.parent;
+        } else { // One or zero children
+            rebalanceStart = nodeToRemove.parent;
+        }
+
+        super.remove(key);
+
+        if (rebalanceStart != null) {
+            fixAVL(rebalanceStart);
+        } else if (root != null) { // If root was affected
+            fixAVL(root);
+        }
+    }
+    }
 }
