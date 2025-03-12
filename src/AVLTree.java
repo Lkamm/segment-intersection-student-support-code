@@ -35,7 +35,7 @@ public class AVLTree<K> extends BinarySearchTree<K> {
 
     public Node<K> fixAVL(Node<K> inserted)
     {
-        System.out.println(" " + inserted + "this was just inserted");
+       // System.out.println(" " + inserted + "this was just inserted");
         Node<K> curr = inserted;
         while (curr != null){
             curr.updateHeight();
@@ -47,7 +47,7 @@ public class AVLTree<K> extends BinarySearchTree<K> {
                 }
                 rotateRight(curr);
             }else if (balance < -1){
-                System.out.println("ZigZag right " + curr.right + " left "+ curr);
+              //  System.out.println("ZigZag right " + curr.right + " left "+ curr);
                 if (getBalance(curr.right) > 0){
                     rotateRight(curr.right);
                 }
@@ -126,27 +126,27 @@ public class AVLTree<K> extends BinarySearchTree<K> {
      * Removes the key from this BST. If the key is not in the tree,
      * nothing happens.
      */
-    public void remove(K key)
-    {
+    public void remove(K key) {
         Node<K> nodeToRemove = super.search(key);
-        if (nodeToRemove == null) return; // Key not found, nothing to remove
-        Node<K> rebalanceStart;
+        if (nodeToRemove == null) {
+            return;
+        }
 
-        if (nodeToRemove.left != null && nodeToRemove.right != null)
-        { // Two children case
-            Node<K> successor = nodeToRemove.right.first(); // In-order successor
-            rebalanceStart = (successor.parent != null) ? successor.parent : nodeToRemove.parent;
-        } else { // One or zero children
-            rebalanceStart = nodeToRemove.parent;
+        Node<K> rebalanceStart = nodeToRemove.parent;
+
+        if (nodeToRemove.left != null && nodeToRemove.right != null) {
+            Node<K> successor = nodeToRemove.right.first();
+            if (successor == nodeToRemove.right) {
+                rebalanceStart = successor;
+            } else {
+                rebalanceStart = successor.parent;
+            }
         }
 
         super.remove(key);
 
         if (rebalanceStart != null) {
             fixAVL(rebalanceStart);
-        } else if (root != null) { // If root was affected
-            fixAVL(root);
         }
-    }
     }
 }

@@ -201,22 +201,36 @@ public class BinarySearchTree<K> implements OrderedSet<K>
         }
         else if (lessThan.test(key, curr.data)) { // remove in left subtree
             curr.left = remove_helper(curr.left, key);
+            if (curr.left != null)
+            {
+                curr.left.parent = curr;
+            }
             curr.updateHeight();
-            //--numNodes;
             return curr;
         } else if (lessThan.test(curr.data, key)) { // remove in right subtree
             curr.right = remove_helper(curr.right, key);
+            if (curr.right != null) {
+
+                curr.right.parent = curr;
+            }
             curr.updateHeight();
             // --numNodes;
-            return curr;
+           return curr;
         } else
         {      // remove this node
             if (curr.left == null) {
                 --numNodes;
+                if (curr.right != null) {
+                    curr.right.parent = curr.parent;
+                }
+                curr.updateHeight();
                 return curr.right;
             } else if (curr.right == null) {
-                curr.updateHeight();
                 --numNodes;
+                if (curr.left != null) {
+                    curr.left.parent = curr.parent;
+                }
+                curr.updateHeight();
                 return curr.left;
             } else
             {   // two children, replace with first of right subtree
@@ -227,8 +241,10 @@ public class BinarySearchTree<K> implements OrderedSet<K>
                 // may need to call the correct curr.right on updateHeight. WIll have to test this
                 return curr;
             }
+
         }
     }
+
     /**
      * TODO
      * Returns a sorted list of all the keys in this tree.

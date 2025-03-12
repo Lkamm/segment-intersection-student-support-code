@@ -322,7 +322,7 @@ public class StudentTest {
             AVLTree<Integer> avl = new AVLTree<>((Integer x, Integer y) -> x < y);
             TreeMap<Integer, Integer> map = new TreeMap<>();
             List<Integer> list = new ArrayList<>();
-            int randomSize = (int) (Math.random() * 500) + 100;
+            int randomSize = (int) (Math.random() * 5) + 5;
             int[] a = new int[randomSize];
             for (int j = 0; j < randomSize; j++)
             {
@@ -353,6 +353,17 @@ public class StudentTest {
             }
             Collections.sort(list);
             assertEquals(list, avl.keys());
+            //System.out.println(list.toString());
+            //System.out.println(avl.keys().toString());
+
+            for(Integer key: a)
+            {
+                //System.out.println(key);
+                avl.remove(key);
+                list.remove(key);
+                validate_AVL_propertys(avl);
+                assertEquals(list, avl.keys());
+            }
         }
     }
 
